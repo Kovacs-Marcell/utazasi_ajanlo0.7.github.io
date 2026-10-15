@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UtazásAjánló · Találd meg a tökéletes utat</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stilus.css">
+</head>
+<body>
+
+  <div class="oldal aktiv" id="oldalKezdo">
+    <nav class="nav">
+      <div class="nav-belso">
+        <div class="marka" onclick="oldalMutatas('oldalKezdo')">
+          <i class="fas fa-paper-plane"></i> UtazásAjánló
+        </div>
+        <div class="nav-linkek">
+          <button class="nav-link" onclick="szekcioUgras('szuroDoboz')">Úti célok</button>
+          <button class="nav-link" onclick="szekcioUgras('ajanlatokSzakasz')">Ajánlatok</button>
+          <button class="nav-link" onclick="szekcioUgras('kapcsolatSzakasz')">Kapcsolat</button>
+          <button class="nav-link nav-kiemelt" onclick="szekcioUgras('kartyakDoboz')">
+            <i class="fas fa-search"></i> Keresés
+          </button>
+          <button class="tema-valto" onclick="temaValtas()"></button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-belso">
+        <span class="hero-badge"><i class="fas fa-bolt"></i> 2026 legjobb ajánlatai</span>
+        <h1>Találd meg a <span class="glow">tökéletes</span> utat,<br>a <span class="glow">kaland</span> itt kezdődik.</h1>
+        <p>Válogass a világ legszebb úti céljai közül, és foglalj repülőt, szállást, autót vagy hajót egy helyen.</p>
+
+        <div class="kereses-panel">
+          <div class="kereses-elem" style="position: relative;">
+            <label>Hová utazol?</label>
+            <input type="text" class="placeholder" id="keresesUtiCel" placeholder="pl. Bali, Párizs..." 
+                   oninput="keresesJavaslat(this.value)" 
+                   onfocus="keresesJavaslat(this.value)"
+                   autocomplete="off">
+            <div class="kereses-javaslatok" id="keresesJavaslatok"></div>
+          </div>
+          <div class="kereses-elem">
+            <label>Indulás</label>
+            <input type="date" id="keresesTol">
+          </div>
+          <div class="kereses-elem">
+            <label>Visszaút</label>
+            <input type="date" id="keresesIg">
+          </div>
+          <div class="kereses-elem">
+            <label>Utasok</label>
+            <select id="keresesLetszam">
+              <option>1 felnőtt</option>
+              <option selected>2 felnőtt</option>
+              <option>3 felnőtt</option>
+              <option>4 felnőtt</option>
+            </select>
+          </div>
+          <button class="kereses-indit" onclick="keresesIndit()">
+            <i class="fas fa-search"></i> Keresés
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats-bar">
+      <div class="stats-inner">
+        <div class="stat"><div class="stat-num">120+</div><div class="stat-label">Úti cél világszerte</div></div>
+        <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Elégedett utazó</div></div>
+        <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Átlagos értékelés</div></div>
+        <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Ügyfélszolgálat</div></div>
+      </div>
+    </div>
+
+    <div class="szuro-doboz" id="szuroDoboz">
+      <h2 class="szuro-cim">Fedezd fel a <span>kategóriákat</span></h2>
+      <div class="szuro-gombok" id="szuroGombok">
+        <button class="szuro-gomb aktiv" data-szuro="mind"><i class="fas fa-globe"></i> Összes</button>
+        <button class="szuro-gomb" data-szuro="strand"><i class="fas fa-umbrella-beach"></i> Strand</button>
+        <button class="szuro-gomb" data-szuro="hegy"><i class="fas fa-mountain"></i> Hegy</button>
+        <button class="szuro-gomb" data-szuro="varos"><i class="fas fa-city"></i> Város</button>
+        <button class="szuro-gomb" data-szuro="kaland"><i class="fas fa-hiking"></i> Kaland</button>
+      </div>
+    </div>
+
+    <div class="kartyak-doboz" id="kartyakDoboz"></div>
+
+    <section class="ajanlatok-szakasz" id="ajanlatokSzakasz">
+      <h2 class="ajanlatok-cim">Aktuális <span>ajánlatok</span></h2>
+      <div class="ajanlatok-racs">
+        <div class="ajanlat-kartya ajanlat-1" onclick="utiCelReszletek(1)">
+          <div class="ajanlat-ikon">🔥</div>
+          <span class="ajanlat-cimke">-30%</span>
+          <h3>Last Minute</h3>
+          <p>Foglalj 48 órán belül és spórolj akár 30%-ot a Maldív-szigetek csomagon.</p>
+          <button class="ajanlat-gomb">Maldív ajánlat →</button>
+        </div>
+        <div class="ajanlat-kartya ajanlat-2" onclick="utiCelReszletek(5)">
+          <div class="ajanlat-ikon">👨‍👩‍👧‍👦</div>
+          <span class="ajanlat-cimke">CSALÁDI</span>
+          <h3>Gyerekek fél áron</h3>
+          <p>Bali családi csomag: a 12 év alatti gyerekek 50% kedvezményt kapnak.</p>
+          <button class="ajanlat-gomb">Bali ajánlat →</button>
+        </div>
+        <div class="ajanlat-kartya ajanlat-3" onclick="utiCelReszletek(3)">
+          <div class="ajanlat-ikon">💎</div>
+          <span class="ajanlat-cimke">EXKLUZÍV</span>
+          <h3>Luxus hétvégék</h3>
+          <p>Kyoto luxus ryokan élmény: privát wellness és gourmet vacsora.</p>
+          <button class="ajanlat-gomb">Kyoto ajánlat →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="kapcsolat-szakasz" id="kapcsolatSzakasz">
+      <div class="kapcsolat-belso">
+        <div class="kapcsolat-info">
+          <h2>Kapcsolat<span>.</span></h2>
+          <p>Kérdésed van? Írj nekünk, és 24 órán belül válaszolunk!</p>
+
+          <div class="kapcsolat-elem">
+            <div class="kapcsolat-elem-ikon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="kapcsolat-elem-szoveg"><strong>Székhely</strong><span>4700 Mátészalka Gépészeti</span></div>
+          </div>
+          <div class="kapcsolat-elem">
+            <div class="kapcsolat-elem-ikon"><i class="fas fa-phone"></i></div>
+            <div class="kapcsolat-elem-szoveg"><strong>Telefon</strong><span>+36 20 455 5689</span></div>
+          </div>
+          <div class="kapcsolat-elem">
+            <div class="kapcsolat-elem-ikon"><i class="fas fa-envelope"></i></div>
+            <div class="kapcsolat-elem-szoveg"><strong>E-mail</strong><span>utazasajanlo69@gmail.com</span></div>
+          </div>
+        </div>
+
+        <form class="kapcsolat-urlap" onsubmit="kapcsolatKuld(event)">
+          <div class="urlap-mezo"><label>Neved</label><input style="border-color: grey;" class="placeholder" type="text" placeholder="pl. Nagy Bence" required></div>
+          <div class="urlap-mezo"><label>E-mail</label><input style="border-color: grey;" class="placeholder" type="email" placeholder="pl. nagybence@gmail.com" required></div>
+          <div class="urlap-mezo"><label>Üzenet</label><textarea style="border-color: grey;" class="placeholder" rows="5" placeholder="Írd le, miben segíthetünk..." required></textarea></div>
+          <button type="submit" class="kapcsolat-kuldes"><i class="fas fa-paper-plane"></i> Üzenet küldése</button>
+          <div class="kapcsolat-siker" id="kapcsolatSiker"><i class="fas fa-check-circle"></i> Köszönjük! Az üzenetedet megkaptuk.</div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="lablec-marka">UtazásAjánló</div>
+      <div>Készítette: Balogh Róbert, Kovács Marcell</div>
+    </footer>
+  </div>
+
+  <div class="oldal aloldal" id="oldalReszletek">
+    <div class="aloldal-fejlec">
+      <div class="aloldal-fejlec-belso">
+        <button class="vissza-gomb" onclick="oldalMutatas('oldalKezdo')">
+          <i class="fas fa-arrow-left"></i> Vissza a főoldalra
+        </button>
+        <h1 id="reszletNev">Bali</h1>
+        <div class="aloldal-hely">
+          <i class="fas fa-map-marker-alt"></i>
+          <span id="reszletHely">Indonézia</span>
+          <span style="margin-left: 1rem; background: rgba(200,241,53,0.2); color: #c8f135; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem;">
+            <i class="fas fa-star"></i> <span id="reszletErtekeles">4.8</span> értékelés
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="aloldal-doboz">
+      <div class="galeria" id="reszletGaleria"></div>
+      <div class="info-sav" id="reszletInfoSav"></div>
+
+      <div class="section">
+        <h2><i class="fas fa-info-circle"></i> A hely bemutatása</h2>
+        <div class="leiras-doboz" id="reszletLeiras"></div>
+      </div>
+
+      <div class="section">
+        <h2><i class="fas fa-hotel"></i> Közeli szállások</h2>
+        <div class="kozeli-grid" id="kozeliGrid"></div>
+      </div>
+
+      <div class="section">
+        <h2><i class="fas fa-landmark"></i> Híres látnivalók</h2>
+        <div class="latnivalok-grid" id="latnivalok"></div>
+      </div>
+
+      <div class="section">
+        <h2><i class="fas fa-star"></i> Utazók értékelései</h2>
+        <div class="velemenyek-lista" id="velemenyekLista"></div>
+      </div>
+
+      <div class="section">
+        <h2><i class="fas fa-route"></i> Hogyan közlekedj a helyszínen?</h2>
+        <p style="color: #6b6b80; margin-bottom: 1rem;" id="kozlekedesAjanlas"></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;" id="kozlekedesValasztas"></div>
+      </div>
+
+      <div class="foglalas-bar" style="background: #dbf8ff; border-radius: 24px; padding: 1.5rem 2rem; box-shadow: 0 8px 30px rgba(15,17,35,.1); border: 1px solid #e8e8f5; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; position: sticky; bottom: 1rem; margin-top: 2rem; z-index: 20;">
+        <div>
+          <div style="font-size: 0.85rem; color: #6b6b80;">Ettől az ártól / fő</div>
+          <div style="font-size: 2rem; font-weight: 900; color: #1b76ffc9;" id="reszletAr">0 Ft <small style="font-size: 0.85rem; color: #6b6b80; font-weight: 500;">/ fő</small></div>
+        </div>
+        <button class="confirm-foglalas" style="width: auto; padding: 1rem 2.5rem;" onclick="foglalashoz()">
+          <i class="fas fa-plane"></i> Foglalás most
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="body{background:#c3dbff94}" class="oldal aloldal" id="oldalSzallas">
+    <div class="aloldal-fejlec">
+      <div class="aloldal-fejlec-belso">
+        <button class="vissza-gomb" onclick="visszaUtiCelhez()">
+          <i class="fas fa-arrow-left"></i> Vissza az úti célhoz
+        </button>
+        <h1 id="szallasNev">Szállás neve</h1>
+        <div class="aloldal-hely">
+          <i class="fas fa-map-marker-alt"></i>
+          <span id="szallasHely">Helyszín</span>
+          <span style="margin-left: 1rem; background: rgba(200,241,53,0.2); color: #c8f135; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem;">
+            <i class="fas fa-star"></i> <span id="szallasErtekeles">4.8</span> értékelés
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="aloldal-doboz">
+      <div class="galeria" id="szallasGaleria"></div>
+      <div class="info-sav" id="szallasInfoSav"></div>
+
+      <div class="section">
+        <h2><i class="fas fa-info-circle"></i> A szállás bemutatása</h2>
+        <div class="leiras-doboz" id="szallasLeiras"></div>
+      </div>
+
+      <div class="section">
+        <h2><i class="fas fa-concierge-bell"></i> Szolgáltatások</h2>
+        <div class="latnivalok-grid" id="szallasSzolgaltatasok"></div>
+      </div>
+
+      <div class="section">
+        <h2><i class="fas fa-star"></i> Vendégek értékelései</h2>
+        <div class="velemenyek-lista" id="szallasVelemenyekLista"></div>
+      </div>
+
+      <div class="foglalas-bar" style="background: #ffffff; border-radius: 24px; padding: 1.5rem 2rem; box-shadow: 0 8px 30px rgba(15,17,35,.1); border: 1px solid #e8e8f5; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; position: sticky; bottom: 1rem; margin-top: 2rem; z-index: 20;">
+        <div>
+          <div style="font-size: 0.85rem; color: #6b6b80;">Ár / éj</div>
+          <div style="font-size: 2rem; font-weight: 900; color: #1b76ffc9;" id="szallasAr">0 Ft <small style="font-size: 0.85rem; color: #6b6b80; font-weight: 500;">/ éj</small></div>
+        </div>
+        <button class="confirm-foglalas" style="width: auto; padding: 1rem 2.5rem;" onclick="szallasKivalasztEsFoglal()">
+          <i class="fas fa-check"></i> Ezt választom
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="oldal aloldal" id="oldalJarmuFo">
+    <div class="kategoria-hero">
+      <div class="kategoria-hero-belso">
+        <button class="vissza-gomb" onclick="visszaUtiCelhez()">
+          <i class="fas fa-arrow-left"></i> Vissza az úti célhoz
+        </button>
+        <h1>Bérelj <span>járművet</span></h1>
+        <p>Válaszd ki, mivel szeretnéd felfedezni a környéket. Autóval a szárazföldön, hajóval a vizeken.</p>
+      </div>
+    </div>
+
+    <div class="jarmu-type-choice">
+      <div class="jarmu-type-kartya vt-car" onclick="jarmuKategoriaNyitas('car')">
+        <div>
+          <div class="jarmu-type-kartya-icon">🚗</div>
+          <h2>Autóbérlés</h2>
+          <p>Városi kisautótól a luxus limuzinig és kabrióig – minden stílushoz.</p>
+        </div>
+        <button class="jarmu-type-kartya-cta">Autók böngészése →</button>
+      </div>
+      <div class="jarmu-type-kartya vt-boat" onclick="jarmuKategoriaNyitas('boat')">
+        <div>
+          <div class="jarmu-type-kartya-icon">⛵</div>
+          <h2>Hajóbérlés</h2>
+          <p>Vitorlástól a luxus yachtig – fedezd fel a vizeket stílusosan.</p>
+        </div>
+        <button class="jarmu-type-kartya-cta">Hajók böngészése →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="oldal aloldal" id="oldalJarmuKategoria">
+    <div class="kategoria-hero">
+      <div class="kategoria-hero-belso">
+        <button class="vissza-gomb" onclick="oldalMutatas('oldalJarmuFo')">
+          <i class="fas fa-arrow-left"></i> Vissza a jármű választóhoz
+        </button>
+        <h1 id="kategoriaCim">Autóbérlés</h1>
+        <p id="kategoriaAlcim">Válassz alkategóriát és böngészd a kínálatot</p>
+      </div>
+    </div>
+
+    <div class="alkategoria-sav" id="alkategoriaSav"></div>
+
+    <div class="jarmu-container">
+      <div class="jarmu-grid" id="jarmuRacs"></div>
+    </div>
+  </div>
+
+  <div class="oldal foglalas-oldal" id="oldalFoglalas">
+    <div class="foglalas-fejlec">
+      <div class="foglalas-fejlec-belso">
+        <button class="vissza-gomb" onclick="visszaFoglalasbol()">
+          <i class="fas fa-arrow-left"></i> Vissza
+        </button>
+        <h1>Foglalás: <span id="foglalasUtiCel">Bali</span></h1>
+        <p>Töltsd ki az alábbi lépéseket, majd a fizetéshez továbbléphetsz.</p>
+      </div>
+    </div>
+
+    <div class="foglalas-doboz">
+      <div class="lepes">
+        <div class="lepes-fejlec">
+          <div class="lepes-szam">1</div>
+          <div><div class="lepes-cim">Válassz légitársaságot</div><div class="lepes-alcim">Kattints a neked tetsző járatra</div></div>
+        </div>
+        <div class="options-grid" id="legitarsasagok"></div>
+      </div>
+
+      <div class="lepes">
+        <div class="lepes-fejlec">
+          <div class="lepes-szam">2</div>
+          <div><div class="lepes-cim">Válassz szállást</div><div class="lepes-alcim" id="szallasLepesAlcim">Az adott úti célhoz tartozó közeli szállások</div></div>
+        </div>
+        <div class="szallas-lehetoseg-racs" id="szallasLehetosegek"></div>
+      </div>
+
+      <div class="lepes">
+        <div class="lepes-fejlec">
+          <div class="lepes-szam">3</div>
+          <div><div class="lepes-cim">Szoba és csomag</div><div class="lepes-alcim">Milyen ellátást szeretnél?</div></div>
+        </div>
+        <div class="options-grid" id="szobaLehetosegek"></div>
+      </div>
+
+      <div class="lepes">
+        <div class="lepes-fejlec">
+          <div class="lepes-szam">4</div>
+          <div><div class="lepes-cim">Utas adatai</div><div class="lepes-alcim">Kinek szól a foglalás?</div></div>
+        </div>
+        <div class="urlap-racs">
+          <div class="urlap-mezo"><label>Teljes név</label><input style="border-color: grey;" type="text" id="foglalasNev" class="placeholder" placeholder="pl. Kovács Anna"></div>
+          <div class="urlap-mezo"><label>E-mail</label><input style="border-color: grey;" type="email" id="foglalasEmail" class="placeholder" placeholder="pl.anna@example.com"></div>
+          <div class="urlap-mezo"><label>Telefonszám</label><input style="border-color: grey;" type="tel" id="foglalasTelefon" class="placeholder" placeholder="pl. +36 30 123 4567"></div>
+          <div class="urlap-mezo">
+            <label>Utasok száma</label>
+            <select style="border-color: grey;" id="foglalasLetszam">
+              <option value="1">1 fő</option>
+              <option value="2" selected>2 fő</option>
+              <option value="3">3 fő</option>
+              <option value="4">4 fő</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="osszesites">
+        <h3><i class="fas fa-receipt"></i> Foglalás összegzése</h3>
+        <div class="osszesites-sor"><span class="label">Úti cél</span><span class="value" id="osszegUtiCel">—</span></div>
+        <div class="osszesites-sor"><span class="label">Légitársaság</span><span class="value" id="osszegLegitarsasag">—</span></div>
+        <div class="osszesites-sor"><span class="label">Szállás</span><span class="value" id="osszegSzallas">—</span></div>
+        <div class="osszesites-sor"><span class="label">Szoba / csomag</span><span class="value" id="osszegSzoba">—</span></div>
+        <div class="osszesites-sor" id="osszegJarmuSor" style="display: none;"><span class="label">Jármű</span><span class="value" id="osszegJarmu">—</span></div>
+        <div class="osszesites-sor"><span class="label">Utasok</span><span class="value" id="osszegLetszam">2 fő</span></div>
+        <div class="osszesites-osszeg"><span>Összesen</span><span class="value" id="osszegVegso">0 Ft</span></div>
+      </div>
+
+      <button class="confirm-foglalas" onclick="fizeteshez()">
+        <i class="fas fa-arrow-right"></i> Tovább a fizetéshez
+      </button>
+    </div>
+  </div>
+
+  <div class="oldal fizetes-page" id="oldalFizetes">
+    <div class="fizetes-fejlec">
+      <div class="fizetes-fejlec-belso">
+        <button class="vissza-gomb" onclick="oldalMutatas('oldalFoglalas')">
+          <i class="fas fa-arrow-left"></i> Vissza a foglaláshoz
+        </button>
+        <h1>Fizetés: <span id="fizetendoOsszeg">0 Ft</span></h1>
+        <p>Válaszd ki a fizetési módot és add meg az adataidat.</p>
+      </div>
+    </div>
+
+    <div class="fizetes-doboz">
+      <div class="fizetes-methods">
+        <div class="fizetesi-mod" data-mod="kartya" onclick="fizetesiModValaszt('kartya')">
+          <span class="fizetesi-mod-ikon">💳</span>
+          <div class="fizetesi-mod-nev">Bankkártya</div>
+          <div class="fizetesi-mod-leiras">Visa, Mastercard, Amex</div>
+        </div>
+        <div class="fizetesi-mod" data-mod="apple" onclick="fizetesiModValaszt('apple')">
+          <span class="fizetesi-mod-ikon">🍎</span>
+          <div class="fizetesi-mod-nev">Apple Pay</div>
+          <div class="fizetesi-mod-leiras">Gyors és biztonságos</div>
+        </div>
+        <div class="fizetesi-mod" data-mod="google" onclick="fizetesiModValaszt('google')">
+          <span class="fizetesi-mod-ikon">🅶</span>
+          <div class="fizetesi-mod-nev">Google Pay</div>
+          <div class="fizetesi-mod-leiras">Egy kattintásos fizetés</div>
+        </div>
+        <div class="fizetesi-mod" data-mod="paypal" onclick="fizetesiModValaszt('paypal')">
+          <span class="fizetesi-mod-ikon">🅿️</span>
+          <div class="fizetesi-mod-nev">PayPal</div>
+          <div class="fizetesi-mod-leiras">PayPal egyenleg</div>
+        </div>
+      </div>
+
+      <div class="kartya-form" id="kartyaUrlap">
+        <div class="kartya-visual">
+          <div style="font-size: 2rem;">💳</div>
+          <div class="kartya-number-display" id="kartyaSzamKijelzo">•••• •••• •••• ••••</div>
+          <div class="kartya-bottom-row">
+            <div><div class="label">Kártyabirtokos</div><div class="value" id="kartyaNevKijelzo">NÉV VEZETÉKNÉV</div></div>
+            <div><div class="label">Lejárat</div><div class="value" id="kartyaLejaratKijelzo">HH/ÉÉ</div></div>
+          </div>
+        </div>
+
+        <div class="urlap-racs">
+          <div class="urlap-mezo" style="grid-column: 1 / -1;">
+            <label>Kártyaszám</label>
+            <input type="text" id="kartyaSzam" placeholder="1234 5678 9012 3456" maxlength="19" oninput="kartyaSzamFrissit(this)">
+          </div>
+          <div class="urlap-mezo" style="grid-column: 1 / -1;">
+            <label>Kártyabirtokos neve</label>
+            <input type="text" id="kartyaNev" placeholder="KOVÁCS ANNA" oninput="kartyaNevFrissit(this)">
+          </div>
+          <div class="urlap-mezo">
+            <label>Lejárati dátum</label>
+            <input type="text" id="kartyaLejarat" placeholder="HH/ÉÉ" maxlength="5" oninput="kartyaLejaratFrissit(this)">
+          </div>
+          <div class="urlap-mezo">
+            <label>CCV</label>
+            <input type="text" id="kartyaCvv" placeholder="123" maxlength="3" oninput="kartyaCvvFrissit(this)">
+          </div>
+        </div>
+      </div>
+
+      <div class="kartya-form" id="penztarcaInfo" style="text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;" id="penztarcaIkon">🍎</div>
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;" id="penztarcaCim">Apple Pay</h3>
+        <p style="color: #6b6b80; margin-bottom: 1.5rem;" id="penztarcaLeiras"></p>
+      </div>
+
+      <button class="fizetes-gomb" onclick="fizetesFeldolgoz()">
+        <i class="fas fa-lock"></i> <span id="fizetesGombSzoveg">Fizetés</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="oldal szamla-oldal" id="oldalSzamla">
+    <div class="szamla-fejlec">
+      <h1>Sikeres <span>fizetés!</span> 🎉</h1>
+      <p>Visszaigazoló számla</p>
+    </div>
+
+    <div class="szamla-doboz">
+      <div class="szamla-paper">
+        <div class="szamla-top">
+          <div>
+            <div class="szamla-logo">UtazásAjánló</div>
+            <div class="szamla-logo-sub">4700 Mátészalka Gépészeti · utazasajanlo69@gmail.com</div>
+          </div>
+          <div class="szamla-meta">
+            <h2>SZÁMLA</h2>
+            <p>Azonosító: <strong id="szamlaAzonosito">UV-2026-XXXXX</strong></p>
+            <p>Dátum: <strong id="szamlaDatum"></strong></p>
+          </div>
+        </div>
+
+        <div class="szamla-section">
+          <h3>Vásárló</h3>
+          <p><strong id="szamlaUgyfel"></strong><br>
+          <span id="szamlaEmail"></span><br>
+          <span id="szamlaTelefon"></span></p>
+        </div>
+
+        <div class="szamla-section">
+          <h3>Utazás részletei</h3>
+          <p><strong>Úti cél:</strong> <span id="szamlaUtiCel"></span><br>
+          <strong>Utasok száma:</strong> <span id="szamlaLetszam"></span></p>
+        </div>
+
+        <table class="szamla-table">
+          <thead>
+            <tr><th>Tétel</th><th>Részletek</th><th>Ár</th></tr>
+          </thead>
+          <tbody id="szamlaTetelek"></tbody>
+        </table>
+
+        <div class="szamla-total">
+          <span style="font-size: 1rem; font-weight: 700;">Fizetendő összeg</span>
+          <span class="value" id="szamlaOsszeg">0 Ft</span>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <div class="szamla-paid-stamp">Fizetve</div>
+          <p style="font-size: 0.85rem; color: #6b6b80;">Fizetési mód: <strong id="szamlaFizetesiMod">Bankkártya</strong></p>
+        </div>
+
+        <div class="szamla-actions">
+          <button class="szamla-btn szamla-btn-primary" onclick="szamlaEmailben()">
+            <i class="fas fa-envelope"></i> Küldés e-mailben
+          </button>
+          <button class="szamla-btn szamla-btn-secondary" onclick="window.print()">
+            <i class="fas fa-print"></i> Nyomtatás / PDF
+          </button>
+        </div>
+
+        <div class="email-elkuldve" id="emailElkuldveUzenet">
+          <i class="fas fa-check-circle"></i> A számlát elküldtük a(z) <strong id="emailCimzett"></strong> címre!
+        </div>
+      </div>
+
+      <button class="vissza-gomb" style="background: #0f1123; border-color: #0f1123; margin-top: 1.5rem;" onclick="oldalMutatas('oldalKezdo')">
+        <i class="fas fa-home"></i> Vissza a főoldalra
+      </button>
+    </div>
+  </div>
+
+  <div class="kepNagyito" id="kepNagyito" onclick="nagyKepBezar(event)">
+    <button class="lightbox-close" onclick="nagyKepBezar(event)">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="nagyKepLapoz(event, -1)"><i class="fas fa-chevron-left"></i></button>
+    <img id="kepNagyitoKep" src="" alt="Galéria">
+    <button class="lightbox-nav lightbox-next" onclick="nagyKepLapoz(event, 1)"><i class="fas fa-chevron-right"></i></button>
+  </div>
+
+  <script src="stilus.js"></script>
+</body>
+</html>
